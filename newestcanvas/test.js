@@ -1,18 +1,15 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let theColor = '';
-let lineW = 5;
+let theColor = '#000000'; // Default color
 let prevX = null;
 let prevY = null;
 let draw = false;
 
 // Function to resize the canvas
 function resizeCanvas() {
-    const navHeight = document.querySelector('.nav').offsetHeight;
     canvas.width = window.innerWidth; // Set canvas width to window width
-    canvas.height = window.innerHeight - navHeight; // Set canvas height to 90% of window height
-    ctx.lineWidth = lineW; // Reset line width to maintain consistency
+    canvas.height = window.innerHeight - document.querySelector('.nav').offsetHeight; // Set canvas height
 }
 
 window.addEventListener("resize", resizeCanvas);
@@ -20,22 +17,13 @@ resizeCanvas(); // Call on load to set initial size
 
 const theInput = document.getElementById("favcolor");
 theInput.addEventListener("input", function() {
-    theColor = this.value;
-    document.body.style.backgroundColor = theColor; // Change body background color
-}, false);
+    theColor = this.value; // Change drawing color
+});
 
 document.getElementById("ageInputId").oninput = function() {
-    lineW = this.value;
-    document.getElementById("ageOutputId").innerHTML = lineW;
-    ctx.lineWidth = lineW; // Update line width
+    ctx.lineWidth = this.value; // Update line width
+    document.getElementById("ageOutputId").innerHTML = this.value;
 };
-
-let clrs = document.querySelectorAll(".clr");
-clrs.forEach(clr => {
-    clr.addEventListener("click", () => {
-        ctx.strokeStyle = clr.dataset.clr; // Set stroke color
-    });
-});
 
 document.querySelector(".clear").addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
@@ -78,11 +66,12 @@ canvas.addEventListener("mousedown", (e) => {
     const pos = getMousePos(canvas, e);
     prevX = pos.x;
     prevY = pos.y;
+    ctx.strokeStyle = theColor; // Set stroke color
 });
 
 canvas.addEventListener("mouseup", () => draw = false); // Stop drawing on mouse up
 canvas.addEventListener("mousemove", (e) => {
-    if (!draw) return; // Only draw if mouse is down
+    if (!draw) return;
     const pos = getMousePos(canvas, e);
     drawLine(pos);
 });
@@ -92,12 +81,13 @@ canvas.addEventListener("touchstart", (e) => {
     const pos = getMousePos(canvas, e.touches[0]);
     prevX = pos.x;
     prevY = pos.y;
+    ctx.strokeStyle = theColor; // Set stroke color
     e.preventDefault(); // Prevent scrolling
 });
 
 canvas.addEventListener("touchend", () => draw = false); // Stop drawing on touch end
 canvas.addEventListener("touchmove", (e) => {
-    if (!draw) return; // Only draw if touch is active
+    if (!draw) return;
     const pos = getMousePos(canvas, e.touches[0]);
     drawLine(pos);
     e.preventDefault(); // Prevent scrolling
@@ -106,9 +96,9 @@ canvas.addEventListener("touchmove", (e) => {
 // Helper function to draw the line
 const drawLine = (currentPos) => {
     ctx.beginPath();
-    ctx.moveTo(prevX, prevY); // Move to previous coordinates
-    ctx.lineTo(currentPos.x, currentPos.y); // Draw line to current coordinates
+    ctx.moveTo(prevX, prevY);
+    ctx.lineTo(currentPos.x, currentPos.y);
     ctx.stroke(); // Apply the stroke
-    prevX = currentPos.x; // Update previous coordinates
-    prevY = currentPos.y; // Update previous coordinates
+    prevX = currentPos.x;
+    prevY = currentPos.y;
 };
