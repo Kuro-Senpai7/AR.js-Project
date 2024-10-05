@@ -12,6 +12,12 @@ function resizeCanvas() {
     canvas.height = window.innerHeight - document.querySelector('.nav').offsetHeight; // Set canvas height
 }
 
+if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('portrait').catch(err => {
+        console.error('Error locking orientation: ${err}');
+    });
+}
+
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Call on load to set initial size
 
