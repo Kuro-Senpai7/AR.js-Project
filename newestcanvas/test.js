@@ -5,11 +5,28 @@ let theColor = '#000000'; // Default color
 let prevX = null;
 let prevY = null;
 let draw = false;
+let history = [];
 
 // Function to resize the canvas
 function resizeCanvas() {
     canvas.width = window.innerWidth; // Set canvas width to window width
     canvas.height = window.innerHeight - document.querySelector('.nav').offsetHeight; // Set canvas height
+}
+
+function saveState() {
+    history.push(canvas.toDataURL());
+}
+
+function undo() {
+    if (history.length > 0) {
+        const lastState = history.pop();
+        const img = new Image();
+        img.src = lastState;
+        img.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+        };
+    }
 }
 
 if (screen.orientation && screen.orientation.lock) {
@@ -61,13 +78,16 @@ document.querySelector(".save-svg").addEventListener("click", () => {
 // Mouse and touch event handling
 const getMousePos = (canvas, event) => {
     const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
     return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
+        x: (event.clientX - rect.left) * scaleX,
+        y: (event.clientY - rect.top) * scaleY
     };
 };
 
 canvas.addEventListener("mousedown", (e) => {
+    saveState();
     draw = true;
     const pos = getMousePos(canvas, e);
     prevX = pos.x;
@@ -83,6 +103,7 @@ canvas.addEventListener("mousemove", (e) => {
 });
 
 canvas.addEventListener("touchstart", (e) => {
+    saveState();
     draw = true;
     const pos = getMousePos(canvas, e.touches[0]);
     prevX = pos.x;
@@ -108,3 +129,5 @@ const drawLine = (currentPos) => {
     prevX = currentPos.x;
     prevY = currentPos.y;
 };
+
+document.querySelector(".undo").addEventListener("click", undo);
