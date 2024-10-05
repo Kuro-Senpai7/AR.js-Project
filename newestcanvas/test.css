@@ -20,7 +20,7 @@ canvas {
 }
 
 .nav {
-    width: 50%; /* Make the navigation full width */
+    width: 100%; /* Make the navigation full width */
     height: 60px; /* Allow height to adjust */
     position: fixed;
     top: 0;
