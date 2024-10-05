@@ -14,7 +14,7 @@ canvas {
     border: 1px solid #000; 
     background-color: #ffffff;
     width: 95%; /* Use 100% width */
-    height: calc(100vh - 60px);
+    height: calc(100vh - 60px - env(safe-area-inset-bottom));
     flex: 1;
     margin-bottom: 60px;
 }
@@ -28,9 +28,10 @@ canvas {
     align-items: center;
     justify-content: space-around;
     background: linear-gradient(to right, #4568DC, #B06AB3);
-    z-index: 10; /* Ensure nav is above other elements */
+    z-index: 100; /* Ensure nav is above other elements */
     padding-top: 10px;
     padding-bottom: 10px;
+    /* padding-bottom: env(safe-area-inset-bottom); */
 }
 
 .nav div, button, input {
