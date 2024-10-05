@@ -14,13 +14,13 @@ body {
 canvas {
     border: 1px solid #000; 
     background-color: #ffffff;
-    width: 100%; /* Use 100% width */
+    width: 90%; /* Use 100% width */
     height: auto;
     flex: 1;
 }
 
 .nav {
-    width: 100%; /* Make the navigation full width */
+    width: 90%; /* Make the navigation full width */
     height: 60px; /* Allow height to adjust */
     position: fixed;
     top: 0;
