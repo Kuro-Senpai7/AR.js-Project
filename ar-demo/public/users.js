@@ -8,29 +8,29 @@ let history = [];
 
 
 // Save current canvas state
-function saveState() {
-    history.push(canvas.toDataURL());
-    if (history.length > 10) {
-        history.shift(); // Remove the oldest state if too many
-    }
-    if (history.lenght > 0){
-    }
-}
+// function saveState() {
+//     history.push(canvas.toDataURL());
+//     if (history.length > 10) {
+//         history.shift(); // Remove the oldest state if too many
+//     }
+//     if (history.lenght > 0){
+//     }
+// }
 
 
 // Undo last action
-function undo() {
-    if (history.length > 0) {
-        const lastState = history.pop();
-        const img = new Image();
-        img.src = lastState;
-        img.onload = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, 0, 0);
-            console.log("problem");
-        };
-    }
-}
+// function undo() {
+//     if (history.length > 0) {
+//         const lastState = history.pop();
+//         const img = new Image();
+//         img.src = lastState;
+//         img.onload = () => {
+//             ctx.clearRect(0, 0, canvas.width, canvas.height);
+//             ctx.drawImage(img, 0, 0);
+//             console.log("problem");
+//         };
+//     }
+// }
 
 // Color input handling
 const theInput = document.getElementById("favcolor");
@@ -50,29 +50,29 @@ document.querySelector(".clear").addEventListener("click", () => {
 });
 
 // Save canvas as PNG
-document.querySelector(".save").addEventListener("click", () => {
-    let data = canvas.toDataURL("image/png");
-    let a = document.createElement("a");
-    a.href = data;
-    a.download = "sketch.png"; // Download as PNG
-    a.click();
-});
+// document.querySelector(".save").addEventListener("click", () => {
+//     let data = canvas.toDataURL("image/png");
+//     let a = document.createElement("a");
+//     a.href = data;
+//     a.download = "sketch.png"; // Download as PNG
+//     a.click();
+// });
 
 // Save canvas as SVG
-document.querySelector(".save-svg").addEventListener("click", () => {
-    const svgHeader = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">`;
-    const svgFooter = `</svg>`;
-    const dataUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    const imageTag = `<image href="${dataUrl}" width="${canvas.width}" height="${canvas.height}" />`;
-    const svg = `${svgHeader}${imageTag}${svgFooter}`;
-    const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "sketch.svg"; // Download as SVG
-    a.click();
-    URL.revokeObjectURL(url);
-});
+// document.querySelector(".save-svg").addEventListener("click", () => {
+//     const svgHeader = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">`;
+//     const svgFooter = `</svg>`;
+//     const dataUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+//     const imageTag = `<image href="${dataUrl}" width="${canvas.width}" height="${canvas.height}" />`;
+//     const svg = `${svgHeader}${imageTag}${svgFooter}`;
+//     const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+//     const url = URL.createObjectURL(blob);
+//     const a = document.createElement("a");
+//     a.href = url;
+//     a.download = "sketch.svg"; // Download as SVG
+//     a.click();
+//     URL.revokeObjectURL(url);
+// });
 
 // Mouse and touch event handling
 const getMousePos = (canvas, event) => {
@@ -87,7 +87,7 @@ const getMousePos = (canvas, event) => {
 
 
 canvas.addEventListener("mousedown", (e) => {
-    saveState();
+    // saveState();
     draw = true;
     const pos = getMousePos(canvas, e);
     prevX = pos.x;
@@ -103,7 +103,7 @@ canvas.addEventListener("mousemove", (e) => {
 });
 
 canvas.addEventListener("touchstart", (e) => {
-    saveState();
+    // saveState();
     draw = true;
     const pos = getMousePos(canvas, e.touches[0]);
     prevX = pos.x;
