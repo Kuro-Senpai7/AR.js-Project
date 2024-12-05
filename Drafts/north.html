@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accelerometer Movement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #output {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Accelerometer Movement PLZ WROK</h1>
+    <div id="output">Waiting for accelerometer data...</div>
+
+    <script>
+        // Initialize variables for tracking movement
+        let lastTime = null;
+        let velocity = { x: 0, y: 0, z: 0 };
+        let position = { x: 0, y: 0, z: 0 };
+
+        function handleMotion(event) {
+            if (!lastTime) {
+                lastTime = event.timeStamp;
+                return;
+            }
+
+            const currentTime = event.timeStamp;
+            const deltaTime = (currentTime - lastTime) / 1000; // Time difference in seconds
+            lastTime = currentTime;
+
+            const acceleration = event.accelerationIncludingGravity;
+            const ax = acceleration.x || 0;
+            const ay = acceleration.y || 0;
+            const az = acceleration.z || 0;
+
+            // Update velocity based on acceleration
+            velocity.x += ax * deltaTime;
+            velocity.y += ay * deltaTime;
+            velocity.z += az * deltaTime;
+
+            // Update position based on velocity
+            position.x += velocity.x * deltaTime;
+            position.y += velocity.y * deltaTime;
+            position.z += velocity.z * deltaTime;
+
+            // Update the HTML with the position data
+            document.getElementById('output').innerText = 
+                `Position X: ${position.x.toFixed(2)} m, Y: ${position.y.toFixed(2)} m, Z: ${position.z.toFixed(2)} m`;
+        }
+
+        if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', handleMotion);
+        } else {
+            document.getElementById('output').innerText = 'DeviceMotionEvent is not supported on this device.';
+        }
+    </script>
+</body>
+</html>

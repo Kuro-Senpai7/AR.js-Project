@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AR.js with Camera Passthrough and Walkable 3D Space</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  <script src="jquery-3.7.1.slim.min.js"></script>
+  <style>
+    body { margin: 0; }
+    #container { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <a-scene embedded arjs='sourceType: webcam; trackingMethod: best;' vr-mode-ui="enabled: false">
+       <!-- Camera passthrough -->
+      <a-camera position="0 1.6 0" look-controls wasd-controls>
+        <!-- Camera entity with controls -->
+      </a-camera>
+
+      <!-- 3D Text Example -->
+      <a-entity text="value: Hello World; align: center;" position="0 1 -3" scale="5 5 5"></a-entity>
+
+    </a-scene>
+  </div>
+</body>
+</html>
